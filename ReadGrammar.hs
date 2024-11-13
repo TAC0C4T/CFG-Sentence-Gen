@@ -3,25 +3,26 @@ module ReadGrammar where
     import Types
 
     readGrammar :: String -> Rule
-    readGrammar rule = foldr parseRule (lines rule)
+    readGrammar rule = foldr parseRule empty (lines rule)
 
--- insert alts into rule and generate the rule
+    
     parseRule :: String -> Rule -> Rule
-    parseRule str rule = insert (takewhile (/= '>') str) (makeTerm (parseAlts str))
+    parseRule str rule = 
+        let ruleName = takeWhile (/= '>') str
+            alts = parseAlts str               
+        in insert ruleName alts rule 
 
 -- parse the string into a list of alts, formatted "(alt)|(alt)|(alt)" with the rule name removed
     getAlts :: String -> [String]
     getAlts alts = splitOn "|" reverse takewhile (/= '>') reverse alts
 
     makeTerm :: [String] -> [Sym]
-    makeTerm alts(head : tail) = 
-        | null alts = []
-        | otherwise = (T head : makeNonTerm tail)
+    makeTerm [] = []
+    makeTerm alts(h:t) = (T h : makeNonTerm t)
 
     makeNonTerm :: [String] -> [Sym]
-    makeNonTerm alts =
-        | null alts = []
-        | otherwise (NT head : makeNonTerm tail)
+    makeNonTerm [] = []
+    makeNonTerm alts(h:t) = (NT h : makeTerm t)
 
 -- turn getAlts [String] into [Alts]
     parseAlts :: String -> [String]

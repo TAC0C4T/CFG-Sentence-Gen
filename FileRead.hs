@@ -3,4 +3,4 @@ module FileRead where
     
     fileRead :: string -> IOString
     fileRead fileName = 
-        readFile
+        readFile(fileName)

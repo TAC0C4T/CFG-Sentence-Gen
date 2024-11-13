@@ -1,7 +1,7 @@
 import Types
-import ReadGrammar
+-- import ReadGrammar
 
 main :: IO ()
 main = do
-    f <- readFile
-    
+    f <- readFile "grammars/g1"
+    print f

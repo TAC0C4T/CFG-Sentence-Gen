@@ -1,4 +1,5 @@
 module Types where
+    import Data.Map
 
     data Sym = NT String
         | T String
@@ -6,6 +7,3 @@ module Types where
     type Alt = [Sym]
 
     type Rule = Map String [Alt]
-
-    type Grammar = [Rule]
-    
