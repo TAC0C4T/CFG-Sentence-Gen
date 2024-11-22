@@ -3,6 +3,7 @@ module Types where
 
     data Sym = NT String
         | T String
+        | E
     
     type Alt = [Sym]
 
